@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>OG_OPINIONS - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #fff0f5, #ffe6f0);
+      color: #333;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #ff9a9e, #fad0c4);
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      animation: slideDown 0.6s ease-in-out;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .navbar .logo {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .navbar .nav-links a {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .navbar .nav-links a:hover {
+      color: #4b4b4b;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .blog-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      animation: fadeIn 0.5s ease-in-out;
+      transition: transform 0.3s;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-5px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .blog-card h3 {
+      margin: 0 0 10px;
+      color: #d6336c;
+    }
+
+    .blog-card p {
+      margin: 0;
+      line-height: 1.6;
+    }
+
+    .like-btn {
+      margin-top: 10px;
+      padding: 6px 12px;
+      background: #ffc0cb;
+      color: #333;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .like-btn:hover {
+      background: #ff99aa;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">OG_OPINIONS</div>
+    <div class="nav-links">
+      <% if (user) { %>
+        <a href="/user/profile"><%= user.name %>'s Profile</a>
+        <form action="/logout" method="POST" style="display:inline;">
+          <button type="submit" style="background:none;border:none;color:#fff;font-weight:500;cursor:pointer;">Logout</button>
+        </form>
+      <% } else { %>
+        <a href="/user/login">Login</a>
+        <a href="/user/register">Register</a>
+      <% } %>
+    </div>
+  </nav>
+
+  <!-- Blog Content -->
+  <div class="container">
+    <h2 style="text-align:center; color: #d6336c;">Recent Posts</h2>
+
+    <% if (posts && posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <div class="blog-card">
+          <h3><%= post.userName %></h3>
+          <p><%= post.content %></p>
+          <form action="/post/like/<%= post._id %>" method="POST">
+            <button class="like-btn">Like (<%= post.likes.length %>)</button>
+          </form>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <p style="text-align: center; color: #777;">No blog posts yet.</p>
+    <% } %>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= user.name %>'s Profile</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffd1dc, #ffe4ec, #ffe9f3);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+      transition: background 0.5s ease;
+    }
+
+    .profile-card {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 40px;
+      border-radius: 25px;
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(255, 105, 180, 0.3);
+      margin-bottom: 50px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .profile-card:hover {
+      transform: scale(1.05);
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      background: #ff85b3;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: auto;
+      margin-bottom: 20px;
+      box-shadow: 0 5px 15px rgba(255, 105, 180, 0.4);
+    }
+
+    h2 {
+      color: #c43c78;
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #6e506c;
+      margin: 8px 0;
+    }
+
+    .info {
+      text-align: left;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #555;
+    }
+
+    .logout-btn {
+      background-color: #ff6fa8;
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      font-size: 16px;
+      border-radius: 12px;
+      margin-top: 25px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #ff90bd;
+    }
+
+    .post-form {
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    .post-form input {
+      width: 100%;
+      padding: 16px;
+      border: 2px solid #ffc3dd;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      font-size: 16px;
+      background-color: #fff5fa;
+      transition: border-color 0.3s ease;
+    }
+
+    .post-form input:focus {
+      border-color: #ff85b3;
+    }
+
+    .post-form button {
+      width: 100%;
+      padding: 14px;
+      background-color: #f173ac;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .post-form button:hover {
+      background-color: #fa94c1;
+    }
+
+    .posts-section {
+      width: 100%;
+      max-width: 600px;
+      background: #fff0f7;
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 5px 20px rgba(255, 182, 193, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .posts-section:hover {
+      transform: scale(1.02);
+    }
+
+    .posts-section h3 {
+      color: #d63384;
+      margin-bottom: 20px;
+      font-size: 24px;
+      text-align: center;
+    }
+
+    .post {
+      background: linear-gradient(120deg, #ffe6ef, #ffeef7);
+      padding: 18px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(255, 105, 180, 0.1);
+      position: relative;
+      transition: background 0.3s ease;
+    }
+
+    .post:hover {
+      background: linear-gradient(120deg, #ffb3d9, #ffe6f2);
+    }
+
+    .post p {
+      color: #5c4d57;
+      font-size: 16px;
+    }
+
+    .date {
+      font-size: 13px;
+      color: #a17399;
+      margin-top: 10px;
+      text-align: right;
+    }
+
+    .like-btn {
+      position: absolute;
+      bottom: 12px;
+      left: 15px;
+      background-color: #ffc0da;
+      border: none;
+      color: #c92a6f;
+      padding: 6px 14px;
+      font-size: 13px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .like-btn:hover {
+      background-color: #ffb2ce;
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    .posts-section, .profile-card {
+      animation: fadeIn 1s ease-in;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="profile-card">
+    <div class="avatar">
+      <%= user.name.charAt(0).toUpperCase() %>
+    </div>
+
+    <h2><%= user.name %></h2>
+    <p><%= user.email %></p>
+
+    <div class="info">
+      <p><strong>Age:</strong> <%= user.age %></p>
+      <p><strong>User ID:</strong> <%= user._id %></p>
+    </div>
+
+    <form action="/logout" method="POST">
+      <button class="logout-btn">Logout</button>
+    </form>
+  </div>
+
+  <form action="/post/create" method="POST" class="post-form">
+    <input type="text" name="content" placeholder="What's on your mind today?" required />
+    <button>Post</button>
+  </form>
+
+  <% if (posts && posts.length > 0) { %>
+    <div class="posts-section">
+      <h3>Your Posts</h3>
+      <% posts.forEach(post => { %>
+        <div class="post">
+          <p><%= post.content %></p>
+          <div class="date">
+            <%= new Date(post.date).toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) %>
+          </div>
+          <form action="/post/like/<%= post._id %>" method="POST">
+            <button type="submit" class="like-btn">❤️ Like (<%= post.likes.length %>)</button>
+          </form>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+</body>
+</html>
